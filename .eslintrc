@@ -144,9 +144,11 @@
           "warn",
           {
             "code": 80,
-            "tabWidth": 2,
+            "ignoreStrings": true,
+            "ignoreTemplateLiterals": true,
+            "ignoreComments": true,
             "ignoreUrls": true,
-            "ignorePattern": "goog.(module|require)"
+            "ignorePattern": "<(path)[^>]*>"
           }
         ],
         "new-cap": "warn",
@@ -206,8 +208,7 @@
         "prefer-rest-params": "warn",
         "prefer-spread": "warn",
         "rest-spread-spacing": "warn",
-        "yield-star-spacing": ["warn", "after"],
-        "react/prop-types": "off"
+        "yield-star-spacing": ["warn", "after"]
     },
     "settings": {
       "react": {
