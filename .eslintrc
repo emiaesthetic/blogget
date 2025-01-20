@@ -206,7 +206,8 @@
         "prefer-rest-params": "warn",
         "prefer-spread": "warn",
         "rest-spread-spacing": "warn",
-        "yield-star-spacing": ["warn", "after"]
+        "yield-star-spacing": ["warn", "after"],
+        "react/prop-types": "off"
     },
     "settings": {
       "react": {
