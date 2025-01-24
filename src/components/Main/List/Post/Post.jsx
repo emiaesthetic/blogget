@@ -5,6 +5,7 @@ import Title from './Title';
 import Author from './Author';
 import Rating from './Rating';
 import Date from './Date';
+import DeleteButton from './DeleteButton';
 
 export const Post = ({ postData }) => {
   const { thumbnail, title, author, ups, date } = postData;
@@ -20,6 +21,8 @@ export const Post = ({ postData }) => {
 
       <Rating ups={ups} />
       <Date date={date} />
+
+      <DeleteButton onClick={() => console.log('Delete')} />
     </li>
   );
 };
