@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import style from './Tabs.module.css';
 import assignID from '../../../utils/generateRandomID';
 import debounceRaf from '../../../utils/debounce';
+import { Text } from '../../../ui/Text';
 
 import { ReactComponent as ArrowIcon } from './img/arrow.svg';
 import { ReactComponent as HomeIcon } from './img/home.svg';
@@ -62,7 +63,7 @@ export const Tabs = () => {
                 className={style.btn}
                 onClick={() => setCurrentTab({ value, id })}
               >
-                {value}
+                <Text>{value}</Text>
                 {Icon && <Icon width={30} height={30} />}
               </button>
             </li>
