@@ -9,6 +9,7 @@ export const Text = prop => {
     size,
     tsize,
     dsize,
+    weight,
     className,
     href,
     center,
@@ -21,6 +22,7 @@ export const Text = prop => {
     { [style[`fs${size}`]]: size },
     { [style[`fst${tsize}`]]: tsize },
     { [style[`fsd${dsize}`]]: dsize },
+    { [style[`${weight}`]]: weight },
     { [style['center']]: center },
   );
 
@@ -37,6 +39,7 @@ Text.propTypes = {
   size: PropTypes.number,
   tsize: PropTypes.number,
   dsize: PropTypes.number,
+  weight: PropTypes.number,
   className: PropTypes.string,
   href: PropTypes.string,
   center: PropTypes.bool,

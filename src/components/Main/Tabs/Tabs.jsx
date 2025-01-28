@@ -63,7 +63,7 @@ export const Tabs = () => {
                 className={style.btn}
                 onClick={() => setCurrentTab({ value, id })}
               >
-                <Text>{value}</Text>
+                <Text weight="medium">{value}</Text>
                 {Icon && <Icon width={30} height={30} />}
               </button>
             </li>

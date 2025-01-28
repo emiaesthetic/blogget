@@ -4,7 +4,14 @@ import { Text } from '../../../../../ui/Text';
 
 export const Title = ({ title, url }) => (
   <h2>
-    <Text As="a" size="18" tsize="24" className={style.linkPost} href={url}>
+    <Text
+      As="a"
+      size="18"
+      tsize="24"
+      weight="bold"
+      className={style.linkPost}
+      href={url}
+    >
       {title}
     </Text>
   </h2>

@@ -54,6 +54,14 @@
   color: var(--grey33);
 }
 
+.medium {
+  font-weight: 500;
+}
+
+.bold {
+  font-weight: 700;
+}
+
 .fs26 {
   font-size: 26px;
   line-height: 32px;
