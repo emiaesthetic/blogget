@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import style from './Tabs.module.css';
-import PropTypes from 'prop-types';
 import assignID from '../../../utils/generateRandomID';
 import debounceRaf from '../../../utils/debounce';
 
@@ -20,6 +19,7 @@ const menuList = [
 export const Tabs = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdown, setIsDropdown] = useState(true);
+  const [currentTab, setCurrentTab] = useState(menuList[0]);
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
@@ -46,8 +46,9 @@ export const Tabs = () => {
           <button
             className={style.btn}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            aria-label="Меню"
           >
-            Add item
+            {currentTab.value}
             <ArrowIcon width={15} height={15} />
           </button>
         </div>
@@ -57,7 +58,10 @@ export const Tabs = () => {
         <ul className={style.list} onClick={() => setIsDropdownOpen(false)}>
           {menuList.map(({ value, id, Icon }) => (
             <li className={style.item} key={id}>
-              <button className={style.btn} onClick={() => {}}>
+              <button
+                className={style.btn}
+                onClick={() => setCurrentTab({ value, id })}
+              >
                 {value}
                 {Icon && <Icon width={30} height={30} />}
               </button>
@@ -67,10 +71,4 @@ export const Tabs = () => {
       )}
     </div>
   );
-};
-
-Tabs.propTypes = {
-  list: PropTypes.array,
-  setList: PropTypes.func,
-  addItem: PropTypes.func,
 };
