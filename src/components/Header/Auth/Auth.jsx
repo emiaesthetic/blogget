@@ -17,7 +17,13 @@ export const Auth = ({ token, removeToken }) => {
         Authorization: `bearer ${token}`,
       },
     })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status);
+        }
+
+        return response.json();
+      })
       .then(({ name, icon_img: iconImg }) => {
         if (iconImg) {
           const img = iconImg.replace(/\?.*$/, '');
@@ -25,7 +31,10 @@ export const Auth = ({ token, removeToken }) => {
         }
       })
       .catch(error => {
-        console.log(error);
+        if (error.message === 401) {
+          removeToken();
+        }
+
         setAuth({});
       });
   }, [token]);
