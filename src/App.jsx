@@ -3,11 +3,11 @@ import Header from './components/Header';
 import Main from './components/Main';
 
 function App() {
-  const [token] = useToken('');
+  const [token, removeToken] = useToken('');
 
   return (
     <>
-      <Header token={token} />
+      <Header token={token} removeToken={removeToken} />
       <Main />
     </>
   );

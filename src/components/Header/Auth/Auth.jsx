@@ -7,8 +7,9 @@ import { Text } from '../../../ui/Text';
 
 import { ReactComponent as LoginIcon } from './img/login.svg';
 
-export const Auth = ({ token }) => {
+export const Auth = ({ token, removeToken }) => {
   const [auth, setAuth] = useState({});
+  const [isLogout, setIsLogout] = useState(false);
 
   useEffect(() => {
     fetch(`${URL_API}/api/v1/me`, {
@@ -29,17 +30,39 @@ export const Auth = ({ token }) => {
       });
   }, [token]);
 
+  const handleLogout = () => {
+    setAuth({});
+    setIsLogout(false);
+    removeToken();
+    window.location.href = '/';
+  };
+
   return (
     <div className={style.container}>
       {auth.name ? (
-        <button className={style.btn}>
-          <img
-            className={style.img}
-            src={auth.img}
-            title={auth.name}
-            alt={`Фото профиля ${auth.name}`}
-          />
-        </button>
+        <>
+          <button
+            className={style.btn}
+            type="button"
+            onClick={() => setIsLogout(!isLogout)}
+          >
+            <img
+              className={style.img}
+              src={auth.img}
+              title={auth.name}
+              alt={`Фото профиля ${auth.name}`}
+            />
+          </button>
+          {isLogout && (
+            <button
+              className={style.logout}
+              type="button"
+              onClick={handleLogout}
+            >
+              Выйти
+            </button>
+          )}
+        </>
       ) : (
         <Text className={style.authLink} As="a" href={urlAuth}>
           <LoginIcon className={style.svg} />
@@ -51,4 +74,5 @@ export const Auth = ({ token }) => {
 
 Auth.propTypes = {
   token: PropTypes.string,
+  removeToken: PropTypes.func,
 };

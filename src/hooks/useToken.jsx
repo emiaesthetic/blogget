@@ -22,5 +22,12 @@ export const useToken = state => {
     }
   });
 
-  return [token];
+  useEffect(() => {});
+
+  const removeToken = () => {
+    setToken('');
+    localStorage.removeItem('bearer');
+  };
+
+  return [token, removeToken];
 };

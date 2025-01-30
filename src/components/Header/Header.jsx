@@ -6,14 +6,14 @@ import Heading from './Heading';
 import Search from './Search';
 import Auth from './Auth';
 
-export const Header = ({ token }) => (
+export const Header = ({ token, removeToken }) => (
   <header className={style.header}>
     <Layout>
       <div className={style.gridContainer}>
         <Logo />
         <Heading>Главная</Heading>
         <Search />
-        <Auth token={token} />
+        <Auth token={token} removeToken={removeToken} />
       </div>
     </Layout>
   </header>
@@ -21,4 +21,5 @@ export const Header = ({ token }) => (
 
 Header.propTypes = {
   token: PropTypes.string,
+  removeToken: PropTypes.func,
 };
