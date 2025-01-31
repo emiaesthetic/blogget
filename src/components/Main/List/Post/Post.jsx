@@ -8,15 +8,18 @@ import Date from './Date';
 import DeleteButton from './DeleteButton';
 
 export const Post = ({ postData }) => {
-  const { thumbnail, title, author, ups, date } = postData;
+  const { thumbnail, title, author, ups, created: date, url } = postData;
 
   return (
     <li className={style.post}>
       <Thumbnail src={thumbnail} alt={title} />
 
       <div className={style.content}>
-        <Title title={title} url="#post" />
-        <Author author={author} url="#author" />
+        <Title title={title} url={url} />
+        <Author
+          author={author}
+          url={`https://www.reddit.com/user/${author}/`}
+        />
       </div>
 
       <Rating ups={ups} />
