@@ -1,21 +1,21 @@
-import { useState } from 'react';
-import { useAuth } from '../../../hooks/useAuth';
+import { useState, useContext } from 'react';
 import style from './Auth.module.css';
-import PropTypes from 'prop-types';
 import urlAuth from '../../../api/auth';
 import { Text } from '../../../ui/Text';
+import { tokenContext } from '../../../context/tokenContext';
+import { authContext } from '../../../context/authContext';
 
 import { ReactComponent as LoginIcon } from './img/login.svg';
 
-export const Auth = ({ token, removeToken }) => {
-  const [auth, resetAuth] = useAuth(token, removeToken);
+export const Auth = () => {
+  const { removeToken } = useContext(tokenContext);
+  const { auth, resetAuth } = useContext(authContext);
   const [isLogout, setIsLogout] = useState(false);
 
   const handleLogout = () => {
     resetAuth();
     setIsLogout(false);
     removeToken();
-    window.location.href = '/';
   };
 
   return (
@@ -51,9 +51,4 @@ export const Auth = ({ token, removeToken }) => {
       )}
     </div>
   );
-};
-
-Auth.propTypes = {
-  token: PropTypes.string,
-  removeToken: PropTypes.func,
 };
