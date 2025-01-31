@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import style from './Auth.module.css';
 import urlAuth from '../../../api/auth';
 import { Text } from '../../../ui/Text';
-import { tokenContext } from '../../../context/tokenContext';
+import { tokenContext } from '../../../context/tokenContext.jsx';
 import { authContext } from '../../../context/authContext';
 
 import { ReactComponent as LoginIcon } from './img/login.svg';
