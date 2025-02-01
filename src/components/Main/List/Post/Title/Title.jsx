@@ -2,7 +2,7 @@ import style from './Title.module.css';
 import PropTypes from 'prop-types';
 import { Text } from '../../../../../ui/Text';
 
-export const Title = ({ title, url }) => (
+export const Title = ({ title, onClick }) => (
   <h2>
     <Text
       As="a"
@@ -10,7 +10,8 @@ export const Title = ({ title, url }) => (
       tsize="24"
       weight="bold"
       className={style.linkPost}
-      href={url}
+      href="#post"
+      onClick={onClick}
     >
       {title}
     </Text>
@@ -19,5 +20,5 @@ export const Title = ({ title, url }) => (
 
 Title.propTypes = {
   title: PropTypes.string,
-  url: PropTypes.string,
+  onClick: PropTypes.func,
 };
