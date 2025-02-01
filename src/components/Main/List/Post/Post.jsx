@@ -29,7 +29,12 @@ export const Post = ({ postData }) => {
         <Author author={author} />
 
         {isModalOpen && (
-          <Modal title={title} markdown={markdown} author={author} />
+          <Modal
+            title={title}
+            markdown={markdown}
+            author={author}
+            closeModal={() => setIsModalOpen(false)}
+          />
         )}
       </div>
 
