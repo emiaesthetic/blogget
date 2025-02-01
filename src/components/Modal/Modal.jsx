@@ -6,6 +6,7 @@ import Markdown from 'markdown-to-jsx';
 import { useCommentsData } from '../../hooks/useCommentsData';
 import { Text } from '../../ui/Text';
 import Comments from './Comments';
+import FormComment from './FormComment';
 
 import { ReactComponent as CloseIcon } from './img/close.svg';
 
@@ -64,6 +65,8 @@ export const Modal = ({ id, closeModal }) => {
         <Text As="p" className={style.author}>
           {author}
         </Text>
+
+        <FormComment />
 
         <Comments comments={comments} />
 
