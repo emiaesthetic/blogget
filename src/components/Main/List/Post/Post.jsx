@@ -5,20 +5,13 @@ import Thumbnail from './Thumbnail';
 import Title from './Title';
 import Author from './Author';
 import Rating from './Rating';
-import Date from './Date';
+import Date from '../../../Date';
 import DeleteButton from './DeleteButton';
 import Modal from '../../../Modal';
 
 export const Post = ({ postData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {
-    thumbnail,
-    title,
-    author,
-    ups,
-    created: date,
-    selftext: markdown,
-  } = postData;
+  const { id, thumbnail, title, author, ups, created: date } = postData;
 
   return (
     <li className={style.post}>
@@ -29,12 +22,7 @@ export const Post = ({ postData }) => {
         <Author author={author} />
 
         {isModalOpen && (
-          <Modal
-            title={title}
-            markdown={markdown}
-            author={author}
-            closeModal={() => setIsModalOpen(false)}
-          />
+          <Modal id={id} closeModal={() => setIsModalOpen(false)} />
         )}
       </div>
 
