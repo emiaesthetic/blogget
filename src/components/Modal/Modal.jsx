@@ -36,12 +36,13 @@ export const Modal = ({ id, closeModal }) => {
     };
   }, []);
 
-  if (loading) return <p>Загрузка...</p>;
-  if (error) return <p>{error}</p>;
+  const renderContent = () => {
+    if (error) return <p>{error}</p>;
 
-  return ReactDOM.createPortal(
-    <div className={style.overlay} ref={overlayRef}>
-      <div className={style.modal}>
+    if (loading) return <p>Загрузка...</p>;
+
+    return (
+      <>
         <Text As="h2" className={style.title}>
           {title}
         </Text>
@@ -69,7 +70,14 @@ export const Modal = ({ id, closeModal }) => {
         <FormComment />
 
         <Comments comments={comments} />
+      </>
+    );
+  };
 
+  return ReactDOM.createPortal(
+    <div className={style.overlay} ref={overlayRef}>
+      <div className={style.modal}>
+        {renderContent()}
         <button className={style.close} onClick={closeModal}>
           <CloseIcon />
         </button>
