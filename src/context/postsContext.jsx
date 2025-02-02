@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useFetch } from '../hooks/useFetch';
+import { usePostsData } from '../hooks/usePostsData';
 
 export const postsContext = React.createContext({});
 
 export const PostsContextProvider = ({ children }) => {
-  const { data: responseData, loading, error } = useFetch('/best');
+  const { data: responseData, loading, error } = usePostsData('/best');
   const posts = responseData?.data.children;
 
   return (

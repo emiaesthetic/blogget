@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { tokenContext } from '../context/tokenContext.jsx';
-import { URL_API } from '../api/constants';
+import { URL_API } from '../api/constants.js';
 
-export const useFetch = endpoint => {
+export const usePostsData = endpoint => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
