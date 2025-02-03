@@ -2,20 +2,21 @@ import { useState, useContext } from 'react';
 import style from './Auth.module.css';
 import urlAuth from '../../../api/auth';
 import { Text } from '../../../ui/Text';
-import { tokenContext } from '../../../context/tokenContext.jsx';
 import { authContext } from '../../../context/authContext';
+import { useDispatch } from 'react-redux';
+import { deleteToken } from '../../../store';
 
 import { ReactComponent as LoginIcon } from './img/login.svg';
 
 export const Auth = () => {
-  const { removeToken } = useContext(tokenContext);
   const { auth, resetAuth } = useContext(authContext);
   const [isLogout, setIsLogout] = useState(false);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     resetAuth();
     setIsLogout(false);
-    removeToken();
+    dispatch(deleteToken());
   };
 
   return (
