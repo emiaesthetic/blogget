@@ -1,9 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import style from './FormComment.module.css';
 import { Text } from '../../../ui/Text';
+import { authContext } from '../../../context/authContext';
 
 export const FormComment = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const { auth } = useContext(authContext);
   const commentRef = useRef(null);
 
   const handleSubmit = event => {
@@ -29,7 +31,7 @@ export const FormComment = () => {
       {isFormVisible && (
         <form className={style.form} onSubmit={handleSubmit}>
           <Text As="h3" size={14} tsize={18}>
-            Имя авторизованного пользователя
+            {auth.name}
           </Text>
           <textarea className={style.textarea} ref={commentRef}></textarea>
           <button className={style.btn}>Отправить</button>
