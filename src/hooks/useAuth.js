@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { URL_API } from '../api/constants';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteToken } from '../store';
+import { deleteToken } from '../store/tokenReducer';
 
 export const useAuth = () => {
   const [auth, setAuth] = useState({});
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.token.token);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -6,7 +6,7 @@ export const usePostsData = endpoint => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.token.token);
 
   useEffect(() => {
     if (!token) return;
