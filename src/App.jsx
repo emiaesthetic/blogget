@@ -1,21 +1,24 @@
 import Header from './components/Header';
 import Main from './components/Main';
-import { store } from './store';
-import { Provider } from 'react-redux';
 import { AuthContextProvider } from './context/authContext';
 import { PostsContextProvider } from './context/postsContext.jsx';
+import { useDispatch } from 'react-redux';
+import { updateToken } from './store/tokenReducer.js';
+import { getToken } from './api/token.js';
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+
+  dispatch(updateToken(getToken()));
+
   return (
-    <Provider store={store}>
-      <AuthContextProvider>
-        <PostsContextProvider>
-          <Header />
-          <Main />
-        </PostsContextProvider>
-      </AuthContextProvider>
-    </Provider>
+    <AuthContextProvider>
+      <PostsContextProvider>
+        <Header />
+        <Main />
+      </PostsContextProvider>
+    </AuthContextProvider>
   );
-}
+};
 
 export default App;
