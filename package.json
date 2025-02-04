@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@redux-devtools/extension": "^3.3.0",
     "classnames": "^2.5.1",
     "cra-template": "1.2.0",
     "markdown-to-jsx": "^7.7.3",
