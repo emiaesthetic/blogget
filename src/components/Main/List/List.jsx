@@ -1,20 +1,24 @@
-import { useContext } from 'react';
 import style from './List.module.css';
 import Post from './Post';
-import { postsContext } from '../../../context/postsContext';
+import { usePostsData } from '../../../hooks/usePostsData';
 
 export const List = () => {
-  const { posts, loading, error } = useContext(postsContext);
-
-  if (loading) return <p>Загрузка...</p>;
-  if (error) return <p>{error}</p>;
-  if (!posts || posts.length === 0) return <p>Нет доступных постов</p>;
+  const { data, loading, error } = usePostsData('best');
 
   return (
-    <ul className={style.list}>
-      {posts.map(({ data }) => (
-        <Post key={data.id} postData={data} />
-      ))}
-    </ul>
+    <>
+      {loading && <p>Загрузка...</p>}
+      {error && <p>{error}</p>}
+      {!loading && !error && data.length === 0 && (
+        <p>Нет доступных постов...</p>
+      )}
+      {!loading && !error && data.length > 0 && (
+        <ul className={style.list}>
+          {data.map(({ data }) => (
+            <Post key={data.id} postData={data} />
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
