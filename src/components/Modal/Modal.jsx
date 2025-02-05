@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import { useCommentsData } from '../../hooks/useCommentsData';
 import { Text } from '../../ui/Text';
+import { Preloader } from '../../ui/Preloader';
 import Comments from './Comments';
 import FormComment from './FormComment';
 
@@ -12,7 +13,7 @@ import { ReactComponent as CloseIcon } from './img/close.svg';
 
 export const Modal = ({ id, closeModal }) => {
   const overlayRef = useRef(null);
-  const { data, loading, error } = useCommentsData(id);
+  const { data, error, status } = useCommentsData(id);
   const { title, author, markdown, comments } = data || {};
 
   const handleClick = ({ target }) => {
@@ -36,12 +37,24 @@ export const Modal = ({ id, closeModal }) => {
     };
   }, []);
 
+  const preloaderStyles = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  };
+
   return ReactDOM.createPortal(
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
-        {loading && <p>Загрузка...</p>}
-        {error && <p>{error}</p>}
-        {!loading && !error && (
+        {status === 'loading' && (
+          <div style={preloaderStyles}>
+            <Preloader size={70} />
+          </div>
+        )}
+        {status === 'error' && <p>{error}</p>}
+        {status === 'loaded' && (
           <>
             <Text As="h2" className={style.title}>
               {title}

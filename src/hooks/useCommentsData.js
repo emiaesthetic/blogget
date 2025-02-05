@@ -4,13 +4,13 @@ import { commentsRequestAsync } from '../store/comments/commentsAction';
 
 export const useCommentsData = articleID => {
   const data = useSelector(state => state.comments.data);
-  const loading = useSelector(state => state.comments.loading);
   const error = useSelector(state => state.comments.error);
+  const status = useSelector(state => state.comments.status);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(commentsRequestAsync(articleID));
   }, [articleID, dispatch]);
 
-  return { data, loading, error };
+  return { data, error, status };
 };

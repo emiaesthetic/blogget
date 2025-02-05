@@ -2,8 +2,8 @@ import { POSTS_REQUEST, POSTS_SUCCESS, POSTS_ERROR } from './postsAction';
 
 const initialState = {
   data: [],
-  loading: false,
   error: '',
+  status: '',
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -11,22 +11,22 @@ export const postsReducer = (state = initialState, action) => {
     case POSTS_REQUEST:
       return {
         ...state,
-        loading: true,
         error: '',
+        status: 'loading',
       };
 
     case POSTS_SUCCESS:
       return {
         ...state,
-        loading: false,
         data: action.data,
+        status: 'loaded',
       };
 
     case POSTS_ERROR:
       return {
         ...state,
-        loading: false,
         error: action.error,
+        status: 'error',
       };
 
     default:

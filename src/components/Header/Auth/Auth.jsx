@@ -2,15 +2,15 @@ import { useState } from 'react';
 import style from './Auth.module.css';
 import urlAuth from '../../../api/auth';
 import { Text } from '../../../ui/Text';
+import { Preloader } from '../../../ui/Preloader';
 import { useDispatch } from 'react-redux';
 import { deleteToken } from '../../../store/token/tokenAction';
 import { useAuth } from '../../../hooks/useAuth';
-import AuthLoader from './AuthLoader';
 
 import { ReactComponent as LoginIcon } from './img/login.svg';
 
 export const Auth = () => {
-  const { auth, loading, resetAuth } = useAuth();
+  const { auth, error, status, resetAuth } = useAuth();
   const [isLogout, setIsLogout] = useState(false);
   const dispatch = useDispatch();
 
@@ -22,9 +22,9 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {loading ? (
-        <AuthLoader />
-      ) : auth.name ? (
+      {status === 'loading' && <Preloader size={30} />}
+      {status === 'error' && <p>{error}</p>}
+      {status === 'loaded' && auth.name ? (
         <>
           <button
             className={style.btn}
