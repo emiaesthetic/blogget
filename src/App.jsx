@@ -1,8 +1,8 @@
 import Header from './components/Header';
 import Main from './components/Main';
 import { useDispatch } from 'react-redux';
-import { updateToken } from './store/tokenReducer.js';
-import { getToken } from './api/token.js';
+import { updateToken } from './store/token/tokenAction';
+import { getToken } from './api/token';
 
 const App = () => {
   const dispatch = useDispatch();

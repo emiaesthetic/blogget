@@ -3,7 +3,7 @@ import style from './Auth.module.css';
 import urlAuth from '../../../api/auth';
 import { Text } from '../../../ui/Text';
 import { useDispatch } from 'react-redux';
-import { deleteToken } from '../../../store/tokenReducer';
+import { deleteToken } from '../../../store/token/tokenAction';
 import { useAuth } from '../../../hooks/useAuth';
 import AuthLoader from './AuthLoader';
 
