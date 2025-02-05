@@ -36,48 +36,42 @@ export const Modal = ({ id, closeModal }) => {
     };
   }, []);
 
-  const renderContent = () => {
-    if (error) return <p>{error}</p>;
-
-    if (loading) return <p>Загрузка...</p>;
-
-    return (
-      <>
-        <Text As="h2" className={style.title}>
-          {title}
-        </Text>
-
-        <div className={style.content}>
-          <Markdown
-            options={{
-              overrides: {
-                a: {
-                  props: {
-                    target: '_blank',
-                  },
-                },
-              },
-            }}
-          >
-            {markdown}
-          </Markdown>
-        </div>
-
-        <Text As="p" className={style.author}>
-          {author}
-        </Text>
-
-        <FormComment />
-
-        <Comments comments={comments} />
-      </>
-    );
-  };
-
   return ReactDOM.createPortal(
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
-        {renderContent()}
+        {loading && <p>Загрузка...</p>}
+        {error && <p>{error}</p>}
+        {!loading && !error && (
+          <>
+            <Text As="h2" className={style.title}>
+              {title}
+            </Text>
+
+            <div className={style.content}>
+              <Markdown
+                options={{
+                  overrides: {
+                    a: {
+                      props: {
+                        target: '_blank',
+                      },
+                    },
+                  },
+                }}
+              >
+                {markdown}
+              </Markdown>
+            </div>
+
+            <Text As="p" className={style.author}>
+              {author}
+            </Text>
+
+            <FormComment />
+
+            <Comments comments={comments ? comments : []} />
+          </>
+        )}
         <button className={style.close} onClick={closeModal}>
           <CloseIcon />
         </button>
