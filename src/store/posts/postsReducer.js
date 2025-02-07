@@ -1,9 +1,16 @@
-import { POSTS_REQUEST, POSTS_SUCCESS, POSTS_ERROR } from './postsAction';
+import {
+  POSTS_REQUEST,
+  POSTS_SUCCESS,
+  POSTS_SUCCESS_AFTER,
+  POSTS_ERROR,
+} from './postsAction';
 
 const initialState = {
   data: [],
   error: '',
   status: '',
+  after: '',
+  isLast: false,
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -12,7 +19,7 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         error: '',
-        status: 'loading',
+        status: state.data.length ? 'loaded' : 'loading',
       };
 
     case POSTS_SUCCESS:
@@ -20,6 +27,16 @@ export const postsReducer = (state = initialState, action) => {
         ...state,
         data: action.data,
         status: 'loaded',
+        after: action.after,
+        isLast: !action.after,
+      };
+
+    case POSTS_SUCCESS_AFTER:
+      return {
+        ...state,
+        data: [...state.data, ...action.data],
+        after: action.after,
+        isLast: !action.after,
       };
 
     case POSTS_ERROR:
