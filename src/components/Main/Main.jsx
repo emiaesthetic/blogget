@@ -1,5 +1,6 @@
 import style from './Main.module.css';
 import Layout from '../Layout';
+import Home from './Home';
 import Tabs from './Tabs';
 import List from './List';
 import Modal from '../Modal';
@@ -10,6 +11,7 @@ export const Main = () => (
     <Layout>
       <Tabs />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="category/:page" element={<List />}>
           <Route path="post/:id" element={<Modal />} />
         </Route>
