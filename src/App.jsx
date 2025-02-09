@@ -3,6 +3,7 @@ import Main from './components/Main';
 import { useDispatch } from 'react-redux';
 import { updateToken } from './store/token/tokenAction';
 import { getToken } from './api/token';
+import { Route, Routes } from 'react-router-dom';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -10,10 +11,17 @@ const App = () => {
   dispatch(updateToken(getToken()));
 
   return (
-    <>
-      <Header />
-      <Main />
-    </>
+    <Routes>
+      <Route
+        path="*"
+        element={
+          <>
+            <Header />
+            <Main />
+          </>
+        }
+      />
+    </Routes>
   );
 };
 

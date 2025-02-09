@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import style from './List.module.css';
 import Post from './Post';
 import { usePostsData } from '../../../hooks/usePostsData';
@@ -10,6 +11,11 @@ export const List = () => {
   const { data, error, status } = usePostsData();
   const endList = useRef(null);
   const dispatch = useDispatch();
+  const { page } = useParams();
+
+  useEffect(() => {
+    dispatch(postsRequestAsync(page));
+  }, [page]);
 
   useEffect(() => {
     if (!endList.current) return;
