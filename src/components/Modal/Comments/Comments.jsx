@@ -8,19 +8,22 @@ export const Comments = ({ comments }) => {
 
   return (
     <ul className={style.list}>
-      {comments.map(({ data: { id, author, body, created: date } }) => (
-        <li className={style.item} key={id}>
-          <Text As="h3" className={style.author} size={18} tsize={22}>
-            {author}
-          </Text>
+      {comments.map(
+        ({ data: { id, author, body, created: date } }) =>
+          body && (
+            <li className={style.item} key={id}>
+              <Text As="h3" className={style.author} size={18} tsize={22}>
+                {author}
+              </Text>
 
-          <Text As="p" className={style.comment} size={14} tsize={18}>
-            {body}
-          </Text>
+              <Text As="p" className={style.comment} size={14} tsize={18}>
+                {body}
+              </Text>
 
-          {date && <Date date={date} />}
-        </li>
-      ))}
+              {date && <Date date={date} />}
+            </li>
+          ),
+      )}
     </ul>
   );
 };

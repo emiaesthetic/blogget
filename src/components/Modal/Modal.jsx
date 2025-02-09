@@ -82,7 +82,7 @@ export const Modal = ({ id, closeModal }) => {
 
             <FormComment />
 
-            <Comments comments={comments ? comments : []} />
+            <Comments comments={comments} />
           </>
         )}
         <button className={style.close} onClick={closeModal}>
