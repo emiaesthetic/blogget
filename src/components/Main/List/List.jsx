@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import style from './List.module.css';
 import Post from './Post';
 import { usePostsData } from '../../../hooks/usePostsData';
@@ -61,6 +61,7 @@ export const List = () => {
           <li key="end" className={style.end} ref={endList} />
         </ul>
       )}
+      <Outlet />
     </>
   );
 };

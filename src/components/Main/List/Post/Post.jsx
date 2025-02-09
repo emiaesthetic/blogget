@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import style from './Post.module.css';
 import PropTypes from 'prop-types';
 import Thumbnail from './Thumbnail';
@@ -7,10 +6,8 @@ import Author from './Author';
 import Rating from './Rating';
 import Date from '../../../Date';
 import DeleteButton from './DeleteButton';
-import Modal from '../../../Modal';
 
 export const Post = ({ postData }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { id, thumbnail, title, author, ups, created: date } = postData;
 
   return (
@@ -18,12 +15,8 @@ export const Post = ({ postData }) => {
       <Thumbnail src={thumbnail} alt={title} />
 
       <div className={style.content}>
-        <Title title={title} onClick={() => setIsModalOpen(true)} />
+        <Title id={id} title={title} />
         <Author author={author} />
-
-        {isModalOpen && (
-          <Modal id={id} closeModal={() => setIsModalOpen(false)} />
-        )}
       </div>
 
       <Rating ups={ups} />
