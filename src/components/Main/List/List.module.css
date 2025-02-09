@@ -5,6 +5,20 @@
   gap: 30px;
 }
 
+.list:not(:last-child) {
+  margin-bottom: 30px;
+}
+
 .end {
   flex-basis: 100%;
+}
+
+.button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  color: var(--grayF5);
+  background-color: var(--orange);
 }

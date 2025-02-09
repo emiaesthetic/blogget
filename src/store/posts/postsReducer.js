@@ -13,6 +13,7 @@ const initialState = {
   after: '',
   isLast: false,
   page: '',
+  isAutoLoadEnabled: true,
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -39,6 +40,7 @@ export const postsReducer = (state = initialState, action) => {
         data: [...state.data, ...action.data],
         after: action.after,
         isLast: !action.after,
+        isAutoLoadEnabled: state.data.length < 20,
       };
 
     case POSTS_ERROR:
@@ -54,6 +56,7 @@ export const postsReducer = (state = initialState, action) => {
         page: action.page,
         after: '',
         isLast: false,
+        isAutoLoadEnabled: true,
       };
 
     default:

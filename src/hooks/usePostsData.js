@@ -8,11 +8,12 @@ export const usePostsData = () => {
   const error = useSelector(state => state.posts.error);
   const after = useSelector(state => state.posts.after);
   const isLast = useSelector(state => state.posts.isLast);
+  const isAutoLoadEnabled = useSelector(state => state.posts.isAutoLoadEnabled);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(postsRequestAsync());
   }, []);
 
-  return { data, error, status, after, isLast };
+  return { data, error, status, after, isLast, isAutoLoadEnabled };
 };

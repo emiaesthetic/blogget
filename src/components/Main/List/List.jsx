@@ -8,7 +8,7 @@ import { Preloader } from '../../../ui/Preloader';
 import { postsRequestAsync } from '../../../store/posts/postsAction';
 
 export const List = () => {
-  const { data, error, status } = usePostsData();
+  const { data, error, status, isAutoLoadEnabled } = usePostsData();
   const endList = useRef(null);
   const dispatch = useDispatch();
   const { page } = useParams();
@@ -18,7 +18,7 @@ export const List = () => {
   }, [page]);
 
   useEffect(() => {
-    if (!endList.current) return;
+    if (!endList.current || !isAutoLoadEnabled) return;
 
     const observer = new IntersectionObserver(
       entries => {
@@ -43,23 +43,45 @@ export const List = () => {
     zIndex: 100,
   };
 
+  if (status === 'lading' && data.length === 0) {
+    return (
+      <div style={preloaderStyles}>
+        <Preloader size={70} />
+      </div>
+    );
+  }
+
+  if (status === 'error') {
+    return <p>{error}</p>;
+  }
+
+  if (status === 'loaded' && data.length === 0) {
+    return <p>Нет постов...</p>;
+  }
+
   return (
     <>
-      {status === 'loading' && data.length === 0 && (
-        <div style={preloaderStyles}>
-          <Preloader size={70} />
-        </div>
-      )}
-      {status === 'error' && <p>{error}</p>}
-      {status === 'loaded' && data.length === 0 && <p>Нет постов...</p>}
-      {status === 'loaded' && data.length > 0 && (
-        <ul className={style.list}>
-          {data.map(({ data }) => (
-            <Post key={data.id} postData={data} />
-          ))}
+      {status === 'loaded' && (
+        <>
+          <ul className={style.list}>
+            {data.map(({ data }) => (
+              <Post key={data.id} postData={data} />
+            ))}
 
-          <li key="end" className={style.end} ref={endList} />
-        </ul>
+            {isAutoLoadEnabled && (
+              <li key="end" className={style.end} ref={endList} />
+            )}
+          </ul>
+
+          {!isAutoLoadEnabled && (
+            <button
+              className={style.button}
+              onClick={() => dispatch(postsRequestAsync())}
+            >
+              Загрузить еще
+            </button>
+          )}
+        </>
       )}
       <Outlet />
     </>
