@@ -25,6 +25,7 @@ export const List = () => {
       },
     );
     observer.observe(endList.current);
+    return () => observer.disconnect();
   }, [data.length]);
 
   const preloaderStyles = {
