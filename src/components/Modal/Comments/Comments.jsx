@@ -4,12 +4,12 @@ import { Text } from '../../../ui/Text';
 import Date from '../../Date';
 
 export const Comments = ({ comments }) => {
-  if (comments.length === 0) return <p>Нет комментариев</p>;
+  if (!comments || comments.length === 0) return <p>Нет комментариев</p>;
 
   return (
     <ul className={style.list}>
       {comments.map(
-        ({ data: { id, author, body, created: date } }) =>
+        ({ id, author, body, created: date }) =>
           body && (
             <li className={style.item} key={id}>
               <Text As="h3" className={style.author} size={18} tsize={22}>

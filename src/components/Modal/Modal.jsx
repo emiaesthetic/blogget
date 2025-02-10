@@ -16,8 +16,8 @@ export const Modal = () => {
   const { id, page } = useParams();
   const navigate = useNavigate();
   const overlayRef = useRef(null);
-  const { data, error, status } = useCommentsData(id);
-  const { title, author, markdown, comments } = data || {};
+  const { post, comments, error, status } = useCommentsData(id);
+  const { title, author, selftext: markdown } = post || {};
 
   const handleClick = ({ target }) => {
     if (target === overlayRef.current) {
