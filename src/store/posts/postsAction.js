@@ -1,43 +1,12 @@
 import axios from 'axios';
 import { URL_API } from '../../api/constants';
-
-export const POSTS_REQUEST = 'POSTS_REQUEST';
-export const POSTS_SUCCESS = 'POSTS_SUCCESS';
-export const POSTS_SUCCESS_AFTER = 'POSTS_SUCCESS_AFTER';
-export const POSTS_ERROR = 'POSTS_ERROR';
-export const CHANGE_PAGE = 'CHANGE_PAGE';
-
-export const postsRequest = () => ({
-  type: POSTS_REQUEST,
-});
-
-export const postsSuccess = data => ({
-  type: POSTS_SUCCESS,
-  data: data.children,
-  after: data.after,
-});
-
-export const postsSuccessAfter = data => ({
-  type: POSTS_SUCCESS_AFTER,
-  data: data.children,
-  after: data.after,
-});
-
-export const postsError = error => ({
-  type: POSTS_ERROR,
-  error,
-});
-
-export const changePage = page => ({
-  type: CHANGE_PAGE,
-  page,
-});
+import { postsSlice } from './postsSlice';
 
 export const postsRequestAsync = newPage => (dispatch, getState) => {
   let page = getState().posts.page;
   if (newPage) {
     page = newPage;
-    dispatch(changePage(page));
+    dispatch(postsSlice.actions.changePage(page));
   }
 
   const token = getState().token.token;
@@ -47,21 +16,21 @@ export const postsRequestAsync = newPage => (dispatch, getState) => {
 
   if (!token || loading || isLast) return;
 
-  dispatch(postsRequest());
+  dispatch(postsSlice.actions.postsRequest());
 
-  axios(`${URL_API}/${page}?limit=10&${after ? `after=${after}` : ''}`, {
+  axios(`${URL_API}/${page}12?limit=10&${after ? `after=${after}` : ''}`, {
     headers: {
       Authorization: `bearer ${token}`,
     },
   })
     .then(({ data: { data } }) => {
       if (after) {
-        dispatch(postsSuccessAfter(data));
+        dispatch(postsSlice.actions.postsSuccessAfter(data));
       } else {
-        dispatch(postsSuccess(data));
+        dispatch(postsSlice.actions.postsSuccess(data));
       }
     })
     .catch(error => {
-      dispatch(postsError(error.message));
+      dispatch(postsSlice.actions.postsError(error.message));
     });
 };
