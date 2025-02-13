@@ -1,20 +1,22 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 import style from './List.module.css';
 import Post from './Post';
-import { usePostsData } from '../../../hooks/usePostsData';
 import { Preloader } from '../../../ui/Preloader';
-import { postsRequestAsync } from '../../../store/posts/postsAction';
+import { postsRequest, changePage } from '../../../store/posts/postsSlice.js';
 
 export const List = () => {
-  const { data, error, status } = usePostsData();
+  const data = useSelector(state => state.posts.data);
+  const status = useSelector(state => state.posts.status);
+  const error = useSelector(state => state.posts.error);
+
   const endList = useRef(null);
   const dispatch = useDispatch();
   const { page } = useParams();
 
   useEffect(() => {
-    dispatch(postsRequestAsync(page));
+    dispatch(changePage(page));
   }, [page]);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ export const List = () => {
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting) {
-          dispatch(postsRequestAsync());
+          dispatch(postsRequest());
         }
       },
       {
