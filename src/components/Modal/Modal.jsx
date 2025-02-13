@@ -1,14 +1,15 @@
 import { useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
 import style from './Modal.module.css';
 import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
-import { useCommentsData } from '../../hooks/useCommentsData';
 import { Text } from '../../ui/Text';
 import { Preloader } from '../../ui/Preloader';
 import { useParams, useNavigate } from 'react-router-dom';
 import Comments from './Comments';
 import FormComment from './FormComment';
+import { commentsRequest } from '../../store/comments/commentsSlice';
 
 import { ReactComponent as CloseIcon } from './img/close.svg';
 
@@ -16,8 +17,12 @@ export const Modal = () => {
   const { id, page } = useParams();
   const navigate = useNavigate();
   const overlayRef = useRef(null);
-  const { post, comments, error, status } = useCommentsData(id);
-  const { title, author, selftext: markdown } = post || {};
+
+  const post = useSelector(state => state.comments.post);
+  const comments = useSelector(state => state.comments.comments);
+  const error = useSelector(state => state.comments.error);
+  const status = useSelector(state => state.comments.status);
+  const dispatch = useDispatch();
 
   const handleClick = ({ target }) => {
     if (target === overlayRef.current) {
@@ -30,6 +35,10 @@ export const Modal = () => {
       navigate(`/category/${page}`);
     }
   };
+
+  useEffect(() => {
+    dispatch(commentsRequest(id));
+  }, [id]);
 
   useEffect(() => {
     document.addEventListener('click', handleClick);
@@ -60,7 +69,7 @@ export const Modal = () => {
         {status === 'loaded' && (
           <>
             <Text As="h2" className={style.title}>
-              {title}
+              {post.title}
             </Text>
 
             <div className={style.content}>
@@ -75,12 +84,12 @@ export const Modal = () => {
                   },
                 }}
               >
-                {markdown}
+                {post.selftext}
               </Markdown>
             </div>
 
             <Text As="p" className={style.author}>
-              {author}
+              {post.author}
             </Text>
 
             <FormComment />
