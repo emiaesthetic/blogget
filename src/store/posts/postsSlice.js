@@ -45,6 +45,7 @@ export const postsSlice = createSlice({
     },
     searchRequest: (state, action) => {
       state.data = [];
+      state.error = '';
       state.after = '';
       state.isLast = false;
       state.status = 'loading';

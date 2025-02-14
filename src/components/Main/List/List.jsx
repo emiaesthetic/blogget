@@ -1,10 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import style from './List.module.css';
 import Post from './Post';
 import { Preloader } from '../../../ui/Preloader';
-import { postsRequest, changePage } from '../../../store/posts/postsSlice.js';
+import {
+  postsRequest,
+  searchRequest,
+  changePage,
+} from '../../../store/posts/postsSlice.js';
 
 export const List = () => {
   const data = useSelector(state => state.posts.data);
@@ -13,11 +17,17 @@ export const List = () => {
 
   const endList = useRef(null);
   const dispatch = useDispatch();
-  const { page } = useParams();
+  const { filter, page } = useParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(changePage(page));
-  }, [page]);
+    if (filter === 'search') {
+      const search = searchParams.get('q');
+      searchRequest(search);
+    } else {
+      dispatch(changePage(page));
+    }
+  }, [filter, page]);
 
   useEffect(() => {
     if (!endList.current) return;
