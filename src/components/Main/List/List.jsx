@@ -1,21 +1,33 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { Outlet, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import style from './List.module.css';
 import Post from './Post';
-import { usePostsData } from '../../../hooks/usePostsData';
 import { Preloader } from '../../../ui/Preloader';
-import { postsRequestAsync } from '../../../store/posts/postsAction';
+import {
+  postsRequest,
+  searchRequest,
+  changePage,
+} from '../../../store/posts/postsSlice.js';
 
 export const List = () => {
-  const { data, error, status } = usePostsData();
+  const data = useSelector(state => state.posts.data);
+  const status = useSelector(state => state.posts.status);
+  const error = useSelector(state => state.posts.error);
+
   const endList = useRef(null);
   const dispatch = useDispatch();
-  const { page } = useParams();
+  const { filter, page } = useParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(postsRequestAsync(page));
-  }, [page]);
+    if (filter === 'search') {
+      const search = searchParams.get('q');
+      searchRequest(search);
+    } else {
+      dispatch(changePage(page));
+    }
+  }, [filter, page]);
 
   useEffect(() => {
     if (!endList.current) return;
@@ -23,7 +35,7 @@ export const List = () => {
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting) {
-          dispatch(postsRequestAsync());
+          dispatch(postsRequest());
         }
       },
       {

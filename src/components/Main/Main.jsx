@@ -13,7 +13,7 @@ export const Main = () => (
       <Tabs />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="category/:page" element={<List />}>
+        <Route path="/:filter/:page?" element={<List />}>
           <Route path="post/:id" element={<Modal />} />
         </Route>
         <Route path="*" element={<Error />} />
