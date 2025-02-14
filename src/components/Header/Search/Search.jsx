@@ -1,7 +1,7 @@
 import style from './Search.module.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { searchRequest } from '../../../store/search/searchAction';
+import { searchRequest } from '../../../store/posts/postsSlice';
 
 import { ReactComponent as SearchIcon } from './img/search.svg';
 

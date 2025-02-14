@@ -7,6 +7,7 @@ import {
   postsSuccessAfter,
   postsError,
   changePage,
+  searchRequest,
 } from './postsSlice';
 
 function* fetchPosts() {
@@ -16,18 +17,25 @@ function* fetchPosts() {
   const page = state.posts.page;
   const after = state.posts.after;
   const isLast = state.posts.isLast;
+  const search = state.posts.search;
 
   if (!token || isLast) return;
 
   try {
-    const request = yield axios(
-      `${URL_API}/${page}?limit=10&${after ? `after=${after}` : ''}`,
-      {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
+    const queryParams = {
+      limit: 10,
+      after: after || undefined,
+      q: search || undefined,
+    };
+
+    const queryString = new URLSearchParams(queryParams).toString();
+    const URL = `${URL_API}/${search ? 'search' : page}?${queryString}`;
+
+    const request = yield axios(URL, {
+      headers: {
+        Authorization: `bearer ${token}`,
       },
-    );
+    });
 
     const { data } = request.data;
 
@@ -44,4 +52,5 @@ function* fetchPosts() {
 export function* watchPosts() {
   yield takeLatest(changePage.type, fetchPosts);
   yield takeLatest(postsRequest.type, fetchPosts);
+  yield takeLatest(searchRequest.type, fetchPosts);
 }

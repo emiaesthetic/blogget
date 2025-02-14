@@ -1,7 +1,6 @@
 import { tokenReducer, tokenMiddleware } from './token/tokenReducer';
 import { commentReducer } from './comment/commentReducer';
 import { authReducer } from './auth/authReducer';
-import { searchReducer } from './search/searchReducer';
 import postsReducer from './posts/postsSlice';
 import commentsReducer from './comments/commentsSlice';
 import { configureStore } from '@reduxjs/toolkit';
@@ -15,7 +14,6 @@ export const store = configureStore({
     token: tokenReducer,
     comment: commentReducer,
     auth: authReducer,
-    search: searchReducer,
     posts: postsReducer,
     comments: commentsReducer,
   },
